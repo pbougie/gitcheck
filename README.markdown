@@ -36,6 +36,11 @@ To execute the command.
 	$ cd <path/to/search>
 	$ gitcheck.sh
 
+To exclude any path pattern.
+
+	$ cd <path/to/search>
+	$ gitcheck.sh -x .bundle
+
 Simple as that. It can take a little time depending on the size of the folder structure you're searching.
 
 

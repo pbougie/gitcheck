@@ -2,11 +2,28 @@
 
 ## gitcheck
 ## 2015-Sep-09: initial script.
+## 2017-Apr-06: add exclusions.
 
 # Initialize variables
 let repos=0
 let repos_changed=0
 let repos_unchanged=0
+
+# Get command line arguments
+while getopts x: option
+do
+  case "${option}"
+  in
+    x) EXCLUDE=${OPTARG};;
+  esac
+done
+
+# Find repos command
+FIND="find . -type d -name .git"
+if [ -n "${EXCLUDE}" ]
+then
+  FIND+=" -not -path */${EXCLUDE}/*"
+fi
 
 # Find repositories and loop through them
 while read folder
@@ -31,7 +48,7 @@ do
 
   # Back to original folder
   cd - &> /dev/null
-done < <(find . -type d -name .git)
+done < <(${FIND})
 
 # Display tally
 printf "\n${repos} git repositories: "
