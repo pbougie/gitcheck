@@ -22,7 +22,7 @@ done
 FIND="find . -type d -name .git"
 if [ -n "${EXCLUDE}" ]
 then
-  FIND+=" -not -path */${EXCLUDE}/*"
+  FIND+=" -not -path '*/${EXCLUDE}/*'"
 fi
 
 # Find repositories and loop through them
