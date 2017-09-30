@@ -18,16 +18,13 @@ do
   esac
 done
 
-# Find repos command
-FIND="find . -type d -name .git"
-if [ -n "${EXCLUDE}" ]
-then
-  FIND+=" -not -path '*/${EXCLUDE}/*'"
-fi
-
 # Find repositories and loop through them
 while read folder
 do
+  if [ -n "${EXCLUDE}" ] && [[ $folder == *$EXCLUDE* ]]; then
+    continue;
+  fi
+
   let repos+=1
 
   # Move into repository folder
@@ -48,7 +45,7 @@ do
 
   # Back to original folder
   cd - &> /dev/null
-done < <(${FIND})
+done < <(find . -type d -name .git)
 
 # Display tally
 printf "\n${repos} git repositories: "
